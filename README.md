@@ -1,6 +1,8 @@
 # PngQuantizator
 
-TODO: Write a gem description
+PngQuantizator is a little wrapper around [ pngquant ](http://pngquant.org/).
+Gives you a nice API to interact with the binary and meaningful exceptions in
+the ruby world if `pngquant` throws an error.
 
 ## Installation
 
@@ -18,7 +20,15 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+```
+file = PngQuantizator::Image.new("/path/to/image.png")
+
+# Quantize to a new file
+file.quantize_to("/path/to/destination.png")
+
+# Quantize in place
+file.quantize!
+```
 
 ## Contributing
 
