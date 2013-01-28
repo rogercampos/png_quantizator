@@ -1,4 +1,6 @@
 # PngQuantizator
+[![Build Status](https://secure.travis-ci.org/rogercampos/png_quantizator.png)](http://travis-ci.org/rogercampos/png_quantizator)
+
 
 PngQuantizator is a little wrapper around [ pngquant ](http://pngquant.org/).
 Gives you a nice API to interact with the binary and meaningful exceptions in
