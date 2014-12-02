@@ -30,6 +30,7 @@ module PngQuantizator
 
       exit_code, err_msg = Open3.popen3("pngquant #{colors}") do |stdin, stdout, stderr, wait_thr|
         stdin.write(File.read(@file_path))
+        stdin.close
 
         File.open(destination_path, "w") do |f|
           f.write stdout.gets(nil)
