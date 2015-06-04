@@ -3,6 +3,7 @@ require 'open3'
 require 'fileutils'
 require 'securerandom'
 require 'tempfile'
+require 'shellwords'
 
 module PngQuantizator
   class PngQuantError < StandardError; end
@@ -32,7 +33,7 @@ module PngQuantizator
         stdin.write(File.read(@file_path))
         stdin.close
 
-        File.open(destination_path, "w") do |f|
+        File.open(Shellwords.escape(destination_path), "w") do |f|
           f.write stdout.gets(nil)
           f.flush
         end
