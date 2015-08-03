@@ -19,10 +19,10 @@ describe PngQuantizator::Image do
 
     it "should work with png files" do
       quantized = PngQuantizator::Image.new(test_png)
-      quantized.quantize_to("#{@tmpdir}/cucota.png").should be_true
+      expect(quantized.quantize_to("#{@tmpdir}/cucota.png")).to eq true
 
-      File.file?("#{@tmpdir}/cucota.png").should be_true
-      File.size("#{@tmpdir}/cucota.png").should < File.size(test_png)
+      expect(File.file?("#{@tmpdir}/cucota.png")).to eq true
+      expect(File.size("#{@tmpdir}/cucota.png")).to be < File.size(test_png)
 
       FileUtils.rm_rf("#{@tmpdir}/cucota.png")
     end
@@ -43,14 +43,14 @@ describe PngQuantizator::Image do
       foo = File.size(original_file_path)
       PngQuantizator::Image.new(original_file_path).quantize!
 
-      File.file?(original_file_path).should be_true
-      File.size(original_file_path).should < foo
+      expect(File.file?(original_file_path)).to eq true
+      expect(File.size(original_file_path)).to be < foo
     end
 
     it "should not leave residual files in tmp" do
       foo = `ls -1 #{@tmpdir}/*.png | wc -l`
       PngQuantizator::Image.new(original_file_path).quantize!
-      foo.should == `ls -1 #{@tmpdir}/*.png | wc -l`
+      expect(foo).to eq `ls -1 #{@tmpdir}/*.png | wc -l`
     end
   end
 end

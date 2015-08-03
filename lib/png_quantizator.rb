@@ -16,14 +16,13 @@ module PngQuantizator
     end
 
     def quantize!(colors = 256)
-      Tempfile.open([SecureRandom.hex(16), ".png"]) do |temp_path|
-        res = quantize_to(temp_path, colors)
-        FileUtils.cp(temp_path, @file_path)
-
-        temp_path.close
-        temp_path.delete
-        res
-      end
+      temp_path = "#{SecureRandom.hex(16)}.png"
+      temp_file = Tempfile.new(temp_path)
+      res = quantize_to(temp_path, colors)
+      FileUtils.cp(temp_path, @file_path)
+      temp_file.close
+      FileUtils.rm temp_path
+      res
     end
 
     def quantize_to(destination_path, colors = 256)
