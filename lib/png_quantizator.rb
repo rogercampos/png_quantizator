@@ -16,13 +16,12 @@ module PngQuantizator
     end
 
     def quantize!(colors = 256)
-      Tempfile.open([SecureRandom.hex(16), ".png"]) do |temp_path|
-        res = quantize_to(temp_path, colors)
-        FileUtils.cp(temp_path, @file_path)
+      Tempfile.open([SecureRandom.hex(16), ".png"]) do |file|
+        quantize_to(file.path, colors)
+        FileUtils.cp(file.path, @file_path)
 
-        temp_path.close
-        temp_path.delete
-        res
+        file.close
+        true
       end
     end
 
@@ -38,7 +37,11 @@ module PngQuantizator
           f.flush
         end
 
-        [wait_thr.value, stderr.gets(nil)]
+        stdout.close
+        error_message = stderr.gets(nil)
+        stderr.close
+
+        [wait_thr.value, error_message]
       end
 
       raise(PngQuantError, err_msg) if exit_code != 0
